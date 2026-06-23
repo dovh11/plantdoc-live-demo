@@ -84,12 +84,26 @@ body::before {
 /* ─────────────────────────────────────────────────────────────────────────
    Header
 ───────────────────────────────────────────────────────────────────────── */
+/* Smooth theme transition on every element */
+html {
+  color-scheme: dark;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+html[data-theme="light"] { color-scheme: light; }
+
 header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 20px 0 0;
   margin-bottom: 40px;
+}
+
+/* Groups badge + settings button on the right side of the header */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .logo {
@@ -682,6 +696,222 @@ footer a:hover { text-decoration: underline; }
 @media (max-width: 400px) {
   .logo-text { font-size: 1.05rem; }
   .badge     { display: none; }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Light Theme Token Overrides
+   Applied when html[data-theme="light"] (set by JS from localStorage).
+───────────────────────────────────────────────────────────────────────── */
+html[data-theme="light"] {
+  --bg-deep:       #f0f4f8;
+  --bg-base:       #ffffff;
+  --bg-surface:    #f6f8fa;
+  --bg-elevated:   #eaeef2;
+  --bg-card:       rgba(255, 255, 255, 0.90);
+
+  --border-subtle: rgba(0,0,0,0.08);
+  --border-accent: rgba(46,160,67,0.40);
+  --border-hover:  rgba(46,160,67,0.70);
+
+  --text-primary:  #0d1117;
+  --text-secondary:#57606a;
+  --text-muted:    #8c959f;
+
+  --glow-green:    0 0 20px rgba(46,160,67,0.18), 0 0 60px rgba(46,160,67,0.08);
+  --glow-green-sm: 0 0 10px rgba(46,160,67,0.20);
+  --shadow-card:   0 4px 24px rgba(0,0,0,0.10), 0 1px 0 rgba(0,0,0,0.04);
+}
+
+/* Light-mode background mesh (softer pastels) */
+html[data-theme="light"] body::before {
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 10%, rgba(63,185,80,0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 80%, rgba(57,212,178,0.05) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 60% at 50% 50%, rgba(88,166,255,0.04) 0%, transparent 70%);
+}
+
+/* Ensure hero gradient text remains readable in light mode */
+html[data-theme="light"] .hero h1 {
+  background: linear-gradient(135deg, #0d1117 20%, #2ea043 60%, #1a9e87 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Settings Button
+───────────────────────────────────────────────────────────────────────── */
+.settings-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition);
+  flex-shrink: 0;
+}
+
+.settings-btn:hover {
+  color: var(--text-primary);
+  border-color: rgba(255,255,255,0.15);
+  background: var(--bg-elevated);
+  transform: rotate(30deg);
+}
+
+html[data-theme="light"] .settings-btn:hover {
+  border-color: rgba(0,0,0,0.15);
+}
+
+.settings-btn[aria-expanded="true"] {
+  color: var(--accent-green);
+  border-color: var(--border-accent);
+  background: rgba(63,185,80,0.08);
+  transform: rotate(60deg);
+  box-shadow: var(--glow-green-sm);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Settings Wrapper (relative anchor for the panel)
+───────────────────────────────────────────────────────────────────────── */
+.settings-wrapper {
+  position: relative;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Settings Panel (dropdown)
+───────────────────────────────────────────────────────────────────────── */
+.settings-panel {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 224px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.35), 0 2px 8px rgba(0,0,0,0.2);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 100;
+  overflow: hidden;
+  /* Entry animation */
+  transform-origin: top right;
+  animation: panelIn 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+html[data-theme="light"] .settings-panel {
+  box-shadow: 0 8px 32px rgba(0,0,0,0.15), 0 1px 4px rgba(0,0,0,0.08);
+}
+
+@keyframes panelIn {
+  from { opacity: 0; transform: scale(0.92) translateY(-6px); }
+  to   { opacity: 1; transform: scale(1)    translateY(0);     }
+}
+
+.settings-panel[hidden] { display: none; }
+
+.settings-panel-header {
+  padding: 12px 14px 8px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.settings-panel-title {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text-muted);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Theme Options (radio group inside the panel)
+───────────────────────────────────────────────────────────────────────── */
+.theme-options {
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.theme-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  transition: all var(--transition);
+  color: var(--text-primary);
+}
+
+.theme-option:hover {
+  background: rgba(255,255,255,0.05);
+  border-color: var(--border-subtle);
+}
+
+html[data-theme="light"] .theme-option:hover {
+  background: rgba(0,0,0,0.04);
+}
+
+.theme-option[aria-checked="true"] {
+  background: rgba(63,185,80,0.10);
+  border-color: rgba(63,185,80,0.30);
+}
+
+html[data-theme="light"] .theme-option[aria-checked="true"] {
+  background: rgba(46,160,67,0.08);
+  border-color: rgba(46,160,67,0.25);
+}
+
+.theme-option-icon {
+  font-size: 1.1rem;
+  line-height: 1;
+  flex-shrink: 0;
+  width: 22px;
+  text-align: center;
+}
+
+.theme-option-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  flex: 1;
+  min-width: 0;
+}
+
+.theme-option-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
+.theme-option-desc {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  line-height: 1.3;
+}
+
+/* Checkmark — hidden by default, shown when aria-checked=true */
+.theme-check-icon {
+  flex-shrink: 0;
+  color: var(--accent-green);
+  opacity: 0;
+  transform: scale(0.5);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.theme-option[aria-checked="true"] .theme-check-icon {
+  opacity: 1;
+  transform: scale(1);
 }
 
 /* ─────────────────────────────────────────────────────────────────────────

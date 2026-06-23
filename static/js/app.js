@@ -1,7 +1,8 @@
 /**
- * PlantDoc — Frontend Application Logic
+ * PlantDoc -- Frontend Application Logic
  *
  * Responsibilities:
+ *  - Theme management (system / light / dark, persisted to localStorage)
  *  - Health-check polling (model status badge)
  *  - File upload handling (gallery + camera)
  *  - Drag-and-drop support
@@ -47,6 +48,11 @@ const errorBanner    = document.getElementById('error-banner');
 const errorText      = document.getElementById('error-text');
 const badgeDot       = document.getElementById('badge-dot');
 const badgeLabel     = document.getElementById('badge-label');
+
+// Theme controls
+const settingsBtn    = document.getElementById('settings-btn');
+const settingsPanel  = document.getElementById('settings-panel');
+const themeOptions   = document.querySelectorAll('.theme-option');
 
 /* ─────────────────────────────────────────────────────────────────────────
    Color Palette — 28 vivid, distinct colors mapped by class index
@@ -104,6 +110,106 @@ async function checkHealth() {
   }
 }
 checkHealth();
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Theme Management
+   Preferences stored in localStorage key 'plantdoc-theme'.
+   Possible values: 'system' | 'light' | 'dark'
+───────────────────────────────────────────────────────────────────────── */
+
+/**
+ * Resolves the effective theme string ('light' or 'dark') from a preference.
+ * When preference is 'system', reads the OS media query.
+ * @param {'system'|'light'|'dark'} preference
+ * @returns {'light'|'dark'}
+ */
+function resolveTheme(preference) {
+  if (preference === 'system') {
+    return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+  }
+  return preference;
+}
+
+/**
+ * Applies a theme preference: updates data-theme on <html>,
+ * persists to localStorage, and syncs the radio-button UI.
+ * @param {'system'|'light'|'dark'} preference
+ */
+function applyTheme(preference) {
+  const resolved = resolveTheme(preference);
+  document.documentElement.setAttribute('data-theme', resolved);
+  localStorage.setItem('plantdoc-theme', preference);
+
+  // Sync aria-checked states on all theme-option buttons
+  themeOptions.forEach(btn => {
+    const isActive = btn.dataset.themeValue === preference;
+    btn.setAttribute('aria-checked', String(isActive));
+  });
+}
+
+/**
+ * Opens or closes the settings panel.
+ * @param {boolean} [force]  If provided, forces open (true) or closed (false).
+ */
+function toggleSettingsPanel(force) {
+  const isHidden = settingsPanel.hasAttribute('hidden');
+  const shouldOpen = force !== undefined ? force : isHidden;
+
+  if (shouldOpen) {
+    settingsPanel.removeAttribute('hidden');
+    settingsBtn.setAttribute('aria-expanded', 'true');
+    // Focus the first option for keyboard users
+    const first = settingsPanel.querySelector('.theme-option');
+    if (first) first.focus();
+  } else {
+    settingsPanel.setAttribute('hidden', '');
+    settingsBtn.setAttribute('aria-expanded', 'false');
+  }
+}
+
+// Open / close on gear button click
+settingsBtn.addEventListener('click', e => {
+  e.stopPropagation();
+  toggleSettingsPanel();
+});
+
+// Select theme when a radio option is clicked
+themeOptions.forEach(btn => {
+  btn.addEventListener('click', () => {
+    applyTheme(btn.dataset.themeValue);
+    // Small delay so user sees the checkmark animate before panel closes
+    setTimeout(() => toggleSettingsPanel(false), 120);
+  });
+});
+
+// Keyboard: Escape closes the panel
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && !settingsPanel.hasAttribute('hidden')) {
+    toggleSettingsPanel(false);
+    settingsBtn.focus();
+  }
+});
+
+// Click outside closes the panel
+document.addEventListener('click', e => {
+  if (!settingsPanel.hasAttribute('hidden') &&
+      !settingsBtn.contains(e.target) &&
+      !settingsPanel.contains(e.target)) {
+    toggleSettingsPanel(false);
+  }
+});
+
+// Live-update when OS theme changes (only relevant when preference = 'system')
+window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', () => {
+  const saved = localStorage.getItem('plantdoc-theme') || 'system';
+  if (saved === 'system') applyTheme('system');
+});
+
+// Initialise: sync UI to whatever theme was applied by the inline script
+(function initThemeUI() {
+  const saved = localStorage.getItem('plantdoc-theme') || 'system';
+  applyTheme(saved);
+}());
 
 /* ─────────────────────────────────────────────────────────────────────────
    Upload Triggers
