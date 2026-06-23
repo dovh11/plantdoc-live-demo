@@ -1,0 +1,27 @@
+version: "3.9"
+
+services:
+  plantdoc:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runtime
+    image: plantdoc-live-demo:latest
+    container_name: plantdoc_app
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+    # Mount assets as a read-only volume so you can swap the model without
+    # rebuilding the image during development
+    volumes:
+      - ./assets:/app/assets:ro
+      - ./static:/app/static:ro
+    environment:
+      - PYTHONUNBUFFERED=1
+    healthcheck:
+      test: ["CMD", "python", "-c",
+             "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s

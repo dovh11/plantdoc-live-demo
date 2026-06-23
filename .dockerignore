@@ -1,0 +1,41 @@
+# Version control
+.git
+.gitignore
+
+# Python cache
+__pycache__
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info
+dist/
+build/
+.eggs/
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# IDE / OS artifacts
+.vscode/
+.idea/
+*.DS_Store
+*.swp
+*.swo
+Thumbs.db
+
+# Docker
+Dockerfile
+.dockerignore
+docker-compose.yml
+
+# Docs / Notebooks
+*.md
+*.ipynb
+notebooks/
+
+# Logs
+*.log
+logs/

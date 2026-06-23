@@ -1,0 +1,19 @@
+# ─────────────────────────────────────────────────────────────
+# PlantDoc Live Demo – Python Dependencies
+# ─────────────────────────────────────────────────────────────
+
+# Web framework & server
+fastapi==0.111.0
+uvicorn[standard]==0.30.1
+python-multipart==0.0.9
+
+# ONNX inference (headless = no GUI deps)
+onnxruntime==1.18.0
+
+# Image processing (headless = no GUI deps)
+opencv-python-headless==4.9.0.80
+numpy==1.26.4
+
+# Utilities
+Pillow==10.3.0
+python-dotenv==1.0.1
