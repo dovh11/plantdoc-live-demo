@@ -11,7 +11,7 @@
 [![Docker](https://img.shields.io/badge/Docker-Containerized-2496ED?style=flat-square&logo=docker&logoColor=white)](https://docker.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
 
-*University Final Project — Computer Vision & Web Systems*
+*University Final Project — Deep Learning*
 
 </div>
 
