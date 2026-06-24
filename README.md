@@ -10,7 +10,7 @@
 [![ONNX](https://img.shields.io/badge/ONNX-Runtime-005CED?style=flat-square&logo=onnx&logoColor=white)](https://onnxruntime.ai)
 [![Docker](https://img.shields.io/badge/Docker-Containerized-2496ED?style=flat-square&logo=docker&logoColor=white)](https://docker.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-Render.com-46E3B7?style=flat-square&logo=render&logoColor=white)](https://plantdoc-live-demo.onrender.com)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Vercel.com-46E3B7?style=flat-square&logo=vercel&logoColor=white)](https://plantdoc-live-demo.vercel.app)
 
 *University Final Project — Deep Learning*
 
@@ -18,8 +18,7 @@
 
 ---
 
-> **🚀 Live Demo:** [https://plantdoc-live-demo.onrender.com](https://plantdoc-live-demo.onrender.com)
-> *(Hosted on Render.com free tier — first load may take ~30 s to wake up)*
+> **🚀 Live Demo:** [https://plantdoc-live-demo.vercel.app](https://plantdoc-live-demo.vercel.app)
 
 ---
 
