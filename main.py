@@ -142,20 +142,12 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-# CORS — explicitly allow the Vercel frontend + local dev origins.
-# Add your custom domain here if you set one up later.
-ALLOWED_ORIGINS = [
-    "https://plantdoc-live-demo.onrender.com",   # unified Render deploy
-    "https://plantdoc-live-demo.vercel.app",      # Vercel production
-    "http://localhost:8000",                       # local Docker / uvicorn
-    "http://127.0.0.1:8000",
-    "http://localhost:3000",                       # any local dev server
-]
-
+# CORS — open to all origins for this public demo API.
+# This allows the Vercel frontend (any subdomain Vercel assigns) to call
+# the Render backend without being blocked by the browser's CORS policy.
 app.add_middleware(
     CORSMiddleware,
-    allow_origin_regex=r"https://plantdoc-live-demo.*\.vercel\.app",  # preview deploys
-    allow_origins=ALLOWED_ORIGINS,
+    allow_origins=["*"],
     allow_methods=["GET", "POST", "OPTIONS"],
     allow_headers=["*"],
 )
