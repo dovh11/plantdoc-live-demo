@@ -1,21 +1,19 @@
 /**
  * PlantDoc — Runtime Configuration
  *
- * This file is loaded BEFORE app.js. It sets the API backend URL so the
- * static frontend (served from Vercel) can reach the FastAPI backend
- * (hosted separately on Render.com).
- *
- * When running locally (Docker / uvicorn) with the frontend served by the
- * same FastAPI process, set API_BASE_URL to an empty string so all fetch
- * calls use a relative path (same origin).
+ * API_BASE_URL controls where fetch() calls are sent.
  *
  * ─── Deployment scenarios ───────────────────────────────────────────────
- *  Local Docker (unified):   API_BASE_URL = ''
- *  Vercel + Render split:    API_BASE_URL = 'https://your-backend.onrender.com'
+ *  Vercel (frontend) + Render (backend, proxied):
+ *    API_BASE_URL = '/api'
+ *    → Vercel edge rewrites /api/* → https://plantdoc-live-demo.onrender.com/*
+ *    → Browser only sees same-origin requests (no ad-blocker interference)
+ *
+ *  Local Docker (unified — backend also serves the frontend):
+ *    API_BASE_URL = ''
+ *    → fetch('/health') and fetch('/predict') hit the same FastAPI process
  * ────────────────────────────────────────────────────────────────────────
  */
 window.PLANTDOC_CONFIG = {
-  // Replace with your Render.com backend URL when deploying to Vercel.
-  // Leave as '' when frontend and backend are served from the same origin.
-  API_BASE_URL: 'https://plantdoc-live-demo.onrender.com',
+  API_BASE_URL: '/api',
 };

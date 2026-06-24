@@ -20,6 +20,13 @@ from __future__ import annotations
 
 import json
 import logging
+import warnings
+
+# Suppress Pydantic v2 "protected_namespaces" warning that fires from
+# FastAPI's internal schema generation (fields prefixed with "model_").
+# This is a cosmetic warning only — it does not affect runtime behaviour.
+warnings.filterwarnings("ignore", message=".*protected_namespaces.*")
+
 import time
 from contextlib import asynccontextmanager
 from pathlib import Path

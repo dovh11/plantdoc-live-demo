@@ -3,8 +3,10 @@
   "framework": null,
   "buildCommand": null,
   "outputDirectory": "static",
-  "routes": [
-    { "handle": "filesystem" },
-    { "src": "/(.*)", "dest": "/index.html" }
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://plantdoc-live-demo.onrender.com/:path*"
+    }
   ]
 }
