@@ -54,6 +54,13 @@ const settingsBtn    = document.getElementById('settings-btn');
 const settingsPanel  = document.getElementById('settings-panel');
 const themeOptions   = document.querySelectorAll('.theme-option');
 
+/**
+ * Base URL for all API calls.
+ * Populated from config.js (window.PLANTDOC_CONFIG.API_BASE_URL).
+ * Falls back to '' (same origin) when running in unified Docker/uvicorn mode.
+ */
+const API_BASE = (window.PLANTDOC_CONFIG && window.PLANTDOC_CONFIG.API_BASE_URL) || '';
+
 /* ─────────────────────────────────────────────────────────────────────────
    Color Palette — 28 vivid, distinct colors mapped by class index
 ───────────────────────────────────────────────────────────────────────── */
@@ -93,7 +100,7 @@ function hexToRgb(hex) {
 ───────────────────────────────────────────────────────────────────────── */
 async function checkHealth() {
   try {
-    const res  = await fetch('/health');
+    const res  = await fetch(API_BASE + '/health');
     const data = await res.json();
     if (data.model_ready) {
       badgeDot.style.background = '#3fb950';
@@ -352,7 +359,7 @@ async function runInference() {
     fd.append('file',      state.imageFile);
     fd.append('threshold', threshold);
 
-    const res = await fetch('/predict', { method: 'POST', body: fd });
+    const res = await fetch(API_BASE + '/predict', { method: 'POST', body: fd });
 
     if (!res.ok) {
       const detail = await res.json().catch(() => ({ detail: `HTTP ${res.status}` }));
