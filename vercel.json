@@ -5,8 +5,12 @@
   "outputDirectory": "static",
   "rewrites": [
     {
-      "source": "/api/:path*",
-      "destination": "https://plantdoc-live-demo.onrender.com/:path*"
+      "source": "/api/health",
+      "destination": "https://plantdoc-live-demo.onrender.com/health"
+    },
+    {
+      "source": "/api/predict",
+      "destination": "https://plantdoc-live-demo.onrender.com/predict"
     }
   ]
 }
