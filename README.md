@@ -6,7 +6,7 @@
 
 [![Python](https://img.shields.io/badge/Python-3.11-3776AB?style=flat-square&logo=python&logoColor=white)](https://python.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.111-009688?style=flat-square&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
-[![YOLOv8](https://img.shields.io/badge/YOLOv8-Medium-FF6B35?style=flat-square)](https://ultralytics.com)
+[![YOLO11](https://img.shields.io/badge/YOLO11-Medium-FF6B35?style=flat-square)](https://ultralytics.com)
 [![ONNX](https://img.shields.io/badge/ONNX-Runtime-005CED?style=flat-square&logo=onnx&logoColor=white)](https://onnxruntime.ai)
 [![Docker](https://img.shields.io/badge/Docker-Containerized-2496ED?style=flat-square&logo=docker&logoColor=white)](https://docker.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
@@ -28,8 +28,8 @@ PlantDoc is a full-stack web application that lets users upload a leaf photo (or
 
 | Feature | Detail |
 |---|---|
-| **Model** | YOLOv8-Medium, exported to ONNX |
-| **Classes** | 28 plant disease categories |
+| **Model** | YOLO11-Medium, exported to ONNX |
+| **Classes** | 29 plant disease categories |
 | **Backend** | FastAPI + ONNX Runtime (CPU) |
 | **Frontend** | Vanilla HTML / CSS / JS, single-page app |
 | **Deployment** | Docker (multi-stage) · Render.com · Railway.app |
@@ -43,8 +43,8 @@ PlantDoc is a full-stack web application that lets users upload a leaf photo (or
 plantdoc-live-demo/
 │
 ├── assets/
-│   ├── best.onnx          # YOLOv8-Medium ONNX model (1×3×640×640 → 1×84×8400)
-│   └── labels.json        # 28 class names
+│   ├── best.onnx          # YOLO11-Medium ONNX model (1×3×640×640 → 1×84×8400)
+│   └── labels.json        # 29 class names
 │
 ├── static/                # Served as the root (/) by FastAPI StaticFiles
 │   ├── index.html         # Single-page application shell
@@ -65,7 +65,7 @@ plantdoc-live-demo/
 
 ## 🧠 Disease Classes
 
-The model detects **28 plant disease conditions** across 10 crops:
+The model detects **29 plant disease conditions** across 10 crops:
 
 | # | Class | # | Class |
 |---|---|---|---|
@@ -142,13 +142,13 @@ Liveness probe. Used by Docker HEALTHCHECK and cloud load-balancers.
 {
   "status": "ok",
   "model_ready": true,
-  "num_classes": 28,
-  "labels_count": 28
+  "num_classes": 29,
+  "labels_count": 29
 }
 ```
 
 ### `POST /predict`
-Run YOLOv8 inference on an uploaded image.
+Run YOLO11 inference on an uploaded image.
 
 **Request** — `multipart/form-data`
 
@@ -232,7 +232,7 @@ Mobile / Desktop Browser
 | **Mobile camera** | `<input capture="environment">` — native camera on iOS & Android |
 | **Canvas rendering** | `createImageBitmap` → `drawImage` → bounding box + label pills |
 | **L-corner accents** | Modern detection box style with corner highlights |
-| **28-color palette** | Deterministic color per `class_id` |
+| **29-color palette** | Deterministic color per `class_id` |
 | **Confidence bar** | Animated CSS fill per detection card |
 | **Live status badge** | Polls `/health`; shows model-ready indicator |
 | **Accessibility** | `role`, `aria-label`, `aria-live`, keyboard navigation |

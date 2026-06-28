@@ -62,7 +62,7 @@ const themeOptions   = document.querySelectorAll('.theme-option');
 const API_BASE = (window.PLANTDOC_CONFIG && window.PLANTDOC_CONFIG.API_BASE_URL) || '';
 
 /* ─────────────────────────────────────────────────────────────────────────
-   Color Palette — 28 vivid, distinct colors mapped by class index
+   Color Palette — 29 vivid, distinct colors mapped by class index
 ───────────────────────────────────────────────────────────────────────── */
 const CLASS_COLORS = [
   '#ff6b6b','#ffd93d','#6bcb77','#4d96ff','#ff922b',
