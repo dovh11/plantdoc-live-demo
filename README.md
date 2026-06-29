@@ -58,7 +58,7 @@ plantdoc-live-demo/
 │   ├── labels.json        # 29-class label index
 │   ├── README.md          # Training details & reproduction guide
 │   └── plantdoc_yolo/     # YOLO training run artefacts (curves, metrics, previews)
-│       └── weights/       # ⚠️ Not tracked by Git — see training/README.md
+│       └── weights/       # best.pt, last.pt, best.onnx (PyTorch & ONNX checkpoints)
 │
 ├── main.py                # FastAPI app — preprocessing, inference, postprocessing
 ├── requirements.txt       # Pinned Python dependencies
@@ -90,6 +90,25 @@ The model detects **29 plant disease conditions** across 10 crops:
 | 11 | Potato leaf early blight | 25 | Tomato two spotted spider mites leaf |
 | 12 | Potato leaf late blight | 26 | grape leaf |
 | 13 | Raspberry leaf | 27 | grape leaf black rot |
+
+---
+
+## 📂 Dataset
+
+[![Dataset](https://img.shields.io/badge/Dataset-PlantDoc%20Object%20Detection-4CAF50?style=flat-square&logo=github&logoColor=white)](https://github.com/dovh11/PlantDoc-Object-Detection-Dataset)
+
+The model was trained on a forked and prepared version of the **PlantDoc Object Detection Dataset**, converted to YOLO format and hosted on GitHub for direct use with Ultralytics:
+
+> 🔗 **[github.com/dovh11/PlantDoc-Object-Detection-Dataset](https://github.com/dovh11/PlantDoc-Object-Detection-Dataset)**
+
+| Property | Value |
+|---|---|
+| **Format** | YOLO (images + labels) |
+| **Classes** | 29 plant disease categories |
+| **Source** | Forked & prepared from the original PlantDoc dataset |
+| **Usage** | Loaded directly into the training notebook via the GitHub URL |
+
+See [`training/plant-disease-detection.ipynb`](training/plant-disease-detection.ipynb) for how the dataset is fetched and used during training.
 
 ---
 

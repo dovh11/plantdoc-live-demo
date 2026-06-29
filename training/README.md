@@ -27,13 +27,11 @@ training/
     ├── val_batch{0,1,2}_labels.jpg # Validation ground-truth
     ├── val_batch{0,1,2}_pred.jpg   # Validation predictions
     │
-    └── weights/                    # ⚠️  Not tracked by Git (see note below)
+    └── weights/                    # Model checkpoints
         ├── best.pt                 # Best PyTorch checkpoint (~39 MB)
         ├── last.pt                 # Last-epoch checkpoint (~39 MB)
         └── best.onnx              # ONNX export used in production (~77 MB)
 ```
-
-> **Note on weights**: `.pt` and `.onnx` files are excluded from Git because they are large binaries. The production model (`best.onnx`) is already committed under `assets/best.onnx`. If you need the raw PyTorch checkpoints, use Git LFS or host them externally (e.g. Google Drive, HuggingFace Hub).
 
 ---
 
@@ -87,7 +85,7 @@ Key plots:
 1. Open `plant-disease-detection.ipynb` in **Google Colab** (GPU runtime recommended).
 2. Mount your Google Drive and set `PROJECT_DIR` to your preferred output path.
 3. The notebook will:
-   - Download and prepare the PlantDoc dataset in YOLO format
+   - Fetch the dataset directly from **[github.com/dovh11/PlantDoc-Object-Detection-Dataset](https://github.com/dovh11/PlantDoc-Object-Detection-Dataset)** (YOLO format, 29 classes)
    - Train YOLO11-Medium for up to 200 epochs
    - Export the best checkpoint to ONNX (`best.onnx`)
 4. Copy `best.onnx` → `assets/best.onnx` in this repo to update the production model.
