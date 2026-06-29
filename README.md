@@ -53,6 +53,13 @@ plantdoc-live-demo/
 │   └── js/
 │       └── app.js         # API calls, canvas rendering, drag-drop, UI state
 │
+├── training/              # Model training pipeline & outputs (reference only)
+│   ├── plant-disease-detection.ipynb  # Google Colab training notebook
+│   ├── labels.json        # 29-class label index
+│   ├── README.md          # Training details & reproduction guide
+│   └── plantdoc_yolo/     # YOLO training run artefacts (curves, metrics, previews)
+│       └── weights/       # ⚠️ Not tracked by Git — see training/README.md
+│
 ├── main.py                # FastAPI app — preprocessing, inference, postprocessing
 ├── requirements.txt       # Pinned Python dependencies
 ├── Dockerfile             # Multi-stage optimised Docker image
