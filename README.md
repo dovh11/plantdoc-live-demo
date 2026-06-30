@@ -49,7 +49,9 @@ PlantDoc is a full-stack web application that lets users upload a leaf photo (or
 
 PlantDoc works seamlessly on both desktop and mobile. On mobile, two primary action buttons guide the user:
 
-![Mobile UI showing Browse Gallery and Take Photo buttons with usage guides](assets/images/ui_buttons.png)
+<div align="center">
+  <img src="assets/images/ui_buttons.png" width="360" alt="Mobile UI showing Browse Gallery and Take Photo buttons with usage guides">
+</div>
 
 | Button | Action |
 |---|---|
