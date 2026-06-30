@@ -37,6 +37,37 @@ PlantDoc is a full-stack web application that lets users upload a leaf photo (or
 
 ---
 
+## 🖥️ Screenshots
+
+### Desktop Interface
+
+![PlantDoc desktop UI running in a laptop browser](assets/images/ui_laptop.png)
+
+---
+
+## 📱 How to Use
+
+PlantDoc works seamlessly on both desktop and mobile. On mobile, two primary action buttons guide the user:
+
+![Mobile UI showing Browse Gallery and Take Photo buttons with usage guides](assets/images/ui_buttons.png)
+
+| Button | Action |
+|---|---|
+| **Browse Gallery** | Open your device's photo library and select an existing leaf image |
+| **Take Photo** | Launch the rear camera to snap a fresh photo of a plant leaf |
+
+Once an image is selected, the AI model runs automatically and draws colour-coded bounding boxes with disease labels over the detected regions.
+
+---
+
+## 🔬 Demo — Squash Powdery Mildew Detection
+
+The image below shows a sample inference result on a **Squash Powdery Mildew** leaf. The model correctly identifies and localises the diseased area with a high-confidence bounding box.
+
+![Demo output showing Squash Powdery Mildew leaf detection result with bounding box](assets/images/demo_squash.png)
+
+---
+
 ## 🗂️ Project Structure
 
 ```
@@ -44,7 +75,11 @@ plantdoc-live-demo/
 │
 ├── assets/
 │   ├── best.onnx          # YOLO11-Medium ONNX model (1×3×640×640 → 1×84×8400)
-│   └── labels.json        # 29 class names
+│   ├── labels.json        # 29 class names
+│   └── images/            # Screenshots & demo images for documentation
+│       ├── ui_laptop.png  # Desktop browser screenshot
+│       ├── ui_buttons.png # Mobile UI guide (Browse Gallery / Take Photo)
+│       └── demo_squash.png# Sample inference result — Squash Powdery Mildew
 │
 ├── static/                # Served as the root (/) by FastAPI StaticFiles
 │   ├── index.html         # Single-page application shell
